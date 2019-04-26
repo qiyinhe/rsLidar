@@ -1,0 +1,2 @@
+ros_rslidar/rslidar:ros_rslidar/rslidar_driver:ros_rslidar/rslidar_msgs:ros_rslidar/rslidar_pointcloud
+-DCATKIN_DEVEL_PREFIX=/home/qiyinhe/rsLidar/devel -DCMAKE_INSTALL_PREFIX=/home/qiyinhe/rsLidar/install -G Unix Makefiles
