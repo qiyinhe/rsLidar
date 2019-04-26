@@ -22,6 +22,6 @@
     <param name="min_distance" value="0.2"/>
   </node>
 
-  <node name="rviz" pkg="rviz" type="rviz"  args="-d $(find rslidar_pointcloud)/rviz_cfg/rslidar.rviz" />
+  <!--node name="rviz" pkg="rviz" type="rviz"  args="-d $(find rslidar_pointcloud)/rviz_cfg/rslidar.rviz" /-->
 
 </launch>

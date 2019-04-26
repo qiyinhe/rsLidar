@@ -348,6 +348,9 @@ ros_rslidar/rslidar_pointcloud/src/CMakeFiles/testrs.dir/testrs.cpp.o
  /usr/include/pcl-1.7/pcl/conversions.h
  /usr/include/pcl-1.7/pcl/correspondence.h
  /usr/include/pcl-1.7/pcl/exceptions.h
+ /usr/include/pcl-1.7/pcl/filters/boost.h
+ /usr/include/pcl-1.7/pcl/filters/filter.h
+ /usr/include/pcl-1.7/pcl/filters/impl/filter.hpp
  /usr/include/pcl-1.7/pcl/for_each_type.h
  /usr/include/pcl-1.7/pcl/impl/cloud_iterator.hpp
  /usr/include/pcl-1.7/pcl/impl/pcl_base.hpp

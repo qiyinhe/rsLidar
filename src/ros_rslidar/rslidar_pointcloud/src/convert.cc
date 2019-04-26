@@ -16,18 +16,34 @@
 #include "convert.h"
 #include <pcl_conversions/pcl_conversions.h>
 
+std::string pcdName(int i){
+    std::string si;
+    std::stringstream st;
+	st<<i;
+	st>>si;
+	return "/home/qiyinhe/rsData/"+si+".pcd";
+}
+
 namespace rslidar_pointcloud
 {
 std::string model;
 
 /** @brief Constructor. */
-Convert::Convert(ros::NodeHandle node, ros::NodeHandle private_nh) : data_(new rslidar_rawdata::RawData())
+Convert::Convert(ros::NodeHandle node,
+        ros::NodeHandle private_nh,
+        boost::shared_ptr<pcl::visualization::PCLVisualizer> cloud_viewer_,
+        pcl::visualization::PointCloudColorHandler<pcl::PointXYZI> &handler)
+    : data_(new rslidar_rawdata::RawData()),
+    viewer_(cloud_viewer_),
+    handler_(handler),
+    cloud_(new pcl::PointCloud<pcl::PointXYZI>),
+    k(-1)
 {
   data_->loadConfigFile(node, private_nh);  // load lidar parameters
   private_nh.param("model", model, std::string("RS16"));
 
   // advertise output point cloud (before subscribing to input data)
-  output_ = node.advertise<sensor_msgs::PointCloud2>("rslidar_points", 10);
+  //output_ = node.advertise<sensor_msgs::PointCloud2>("rslidar_points", 10);
 
   srv_ = boost::make_shared<dynamic_reconfigure::Server<rslidar_pointcloud::CloudNodeConfig> >(private_nh);
   dynamic_reconfigure::Server<rslidar_pointcloud::CloudNodeConfig>::CallbackType f;
@@ -76,7 +92,33 @@ void Convert::processScan(const rslidar_msgs::rslidarScan::ConstPtr& scanMsg)
   }
   sensor_msgs::PointCloud2 outMsg;
   pcl::toROSMsg(*outPoints, outMsg);
+  processCloud(outMsg);
 
-  output_.publish(outMsg);
+  //output_.publish(outMsg);
+}
+
+void Convert::ros2pcl(sensor_msgs::PointCloud2& msg){
+    pcl::PCLPointCloud2 pcl_pc2;
+    pcl_conversions::toPCL(msg, pcl_pc2);
+    std::vector<int> indicies;
+    pcl::fromPCLPointCloud2(pcl_pc2,*cloud_);
+    pcl::removeNaNFromPointCloud(*cloud_, *cloud_,indicies);
+}
+
+void Convert::view(){
+    handler_.setInputCloud (cloud_);
+    if (!viewer_->updatePointCloud (cloud_, handler_, "rs"))
+        viewer_->addPointCloud (cloud_, handler_, "rs");//如果不能用cloud刷新当前视口的点云数据，那么就讲cloud添加到当前视口
+    viewer_->spinOnce ();
+}
+
+
+void Convert::processCloud(sensor_msgs::PointCloud2& msg){
+    ros2pcl(msg);
+    view();
+
+    //The process of pcl::PointCloud
+    pcl::io::savePCDFileASCII(pcdName(++k),*cloud_);
+    std::cout<<k<<"   "<<cloud_->size()<<"\n";
 }
 }  // namespace rslidar_pointcloud

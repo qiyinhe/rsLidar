@@ -1,5 +1,6 @@
 #include "ros/ros.h"
 #include "sensor_msgs/PointCloud2.h"
+#include <pcl/filters/filter.h>
 #include <pcl_conversions/pcl_conversions.h>
 #include <pcl/point_types.h>
 #include <pcl/PCLPointCloud2.h>
@@ -26,16 +27,11 @@ void rslidarCallback(const sensor_msgs::PointCloud2::ConstPtr& msg)
     pcl::PCLPointCloud2 pcl_pc2;
     pcl_conversions::toPCL(*msg,pcl_pc2);
     pcl::PointCloud<pcl::PointXYZI>::Ptr temp_cloud(new pcl::PointCloud<pcl::PointXYZI>);
+    std::vector<int> indicies;
     pcl::fromPCLPointCloud2(pcl_pc2,*temp_cloud);
+    pcl::removeNaNFromPointCloud(*temp_cloud, *temp_cloud,indicies);
     pcl::io::savePCDFileASCII(pcdName(++k),*temp_cloud);
-    std::cout<<k<<"\n";
-    /*std::cout<<"width:"<<temp_cloud->width<<" height:"<<temp_cloud->height<<"width*height:"<<temp_cloud->width * temp_cloud->height;
-    for(int i=0;i<=temp_cloud->size();++i){
-        std::cout<<"point i:"<<i<<"\n";
-        std::cout<<"x="<<temp_cloud->points[i].x<<"\n";
-        std::cout<<"y="<<temp_cloud->points[i].y<<"\n";
-        std::cout<<"z="<<temp_cloud->points[i].z<<"\n";
-    }*/
+    std::cout<<k<<"   "<<temp_cloud->size()<<"\n";
 }
 
 int main(int argc, char **argv)

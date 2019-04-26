@@ -347,6 +347,9 @@ ros_rslidar/rslidar_pointcloud/src/CMakeFiles/testrs.dir/testrs.cpp.o: /usr/incl
 ros_rslidar/rslidar_pointcloud/src/CMakeFiles/testrs.dir/testrs.cpp.o: /usr/include/pcl-1.7/pcl/conversions.h
 ros_rslidar/rslidar_pointcloud/src/CMakeFiles/testrs.dir/testrs.cpp.o: /usr/include/pcl-1.7/pcl/correspondence.h
 ros_rslidar/rslidar_pointcloud/src/CMakeFiles/testrs.dir/testrs.cpp.o: /usr/include/pcl-1.7/pcl/exceptions.h
+ros_rslidar/rslidar_pointcloud/src/CMakeFiles/testrs.dir/testrs.cpp.o: /usr/include/pcl-1.7/pcl/filters/boost.h
+ros_rslidar/rslidar_pointcloud/src/CMakeFiles/testrs.dir/testrs.cpp.o: /usr/include/pcl-1.7/pcl/filters/filter.h
+ros_rslidar/rslidar_pointcloud/src/CMakeFiles/testrs.dir/testrs.cpp.o: /usr/include/pcl-1.7/pcl/filters/impl/filter.hpp
 ros_rslidar/rslidar_pointcloud/src/CMakeFiles/testrs.dir/testrs.cpp.o: /usr/include/pcl-1.7/pcl/for_each_type.h
 ros_rslidar/rslidar_pointcloud/src/CMakeFiles/testrs.dir/testrs.cpp.o: /usr/include/pcl-1.7/pcl/impl/cloud_iterator.hpp
 ros_rslidar/rslidar_pointcloud/src/CMakeFiles/testrs.dir/testrs.cpp.o: /usr/include/pcl-1.7/pcl/impl/pcl_base.hpp
